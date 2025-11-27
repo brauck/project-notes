@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",              // во что компилировать JS (ES5, ES6, ES2020 и т.д.)
+    "module": "commonjs",            // система модулей (для Node.js — commonjs, для браузера — esnext)
+    "rootDir": "./",                 // где лежат исходники .ts
+    "outDir": "./dist",              // куда класть скомпилированные .js
+    "strict": true,                  // включает строгую типизацию
+    "esModuleInterop": true,         // позволяет импортировать commonjs модули как ES
+    "forceConsistentCasingInFileNames": true, // проверка регистра в путях
+    "skipLibCheck": true,             // ускоряет компиляцию, не проверяя типы в node_modules
+    "types": ["node"]
+  },
+  "include": ["./**/*.ts"],          // какие файлы компилировать
+  "exclude": ["node_modules", "dist"] // какие папки игнорировать
+}

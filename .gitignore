@@ -1,0 +1,21 @@
+# Node.js зависимости
+node_modules/
+
+# Скомпилированные JS-файлы
+dist/
+
+# Логи
+*.log
+
+# ОС и редакторные файлы
+.DS_Store
+Thumbs.db
+
+# Конфигурация окружения
+.env
+
+# Кэш TypeScript
+*.tsbuildinfo
+
+# Окружение
+.env
