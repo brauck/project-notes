@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "title": "Учеба",
+    "content": "Разобрать generics в TypeScript",
+    "tags": [
+      "typescript",
+      "study"
+    ],
+    "createdAt": "2025-12-02T19:14:27.590Z"
+  },
+  {
+    "id": 2,
+    "title": "Проект",
+    "content": "Добавить сохранение заметок в JSON",
+    "tags": [
+      "project",
+      "todo"
+    ],
+    "createdAt": "2025-12-02T19:14:27.590Z"
+  }
+]
