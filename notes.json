@@ -1,11 +1,12 @@
 [
   {
     "id": 1,
-    "title": "Учеба",
-    "content": "Разобрать generics в TypeScript",
+    "title": "Учеба и практика",
+    "content": "Разобрать generics и utility types",
     "tags": [
       "typescript",
-      "study"
+      "study",
+      "advanced"
     ],
     "createdAt": "2025-12-02T19:14:27.590Z"
   },
@@ -18,5 +19,85 @@
       "todo"
     ],
     "createdAt": "2025-12-02T19:14:27.590Z"
+  },
+  {
+    "id": 3,
+    "title": "Учеба",
+    "content": "Разобрать generics в TypeScript",
+    "tags": [
+      "typescript",
+      "study"
+    ],
+    "createdAt": "2025-12-03T03:45:47.135Z"
+  },
+  {
+    "id": 4,
+    "title": "Проект",
+    "content": "Добавить сохранение заметок в JSON",
+    "tags": [
+      "project",
+      "todo"
+    ],
+    "createdAt": "2025-12-03T03:45:47.135Z"
+  },
+  {
+    "id": 5,
+    "title": "Учеба",
+    "content": "Разобрать generics в TypeScript",
+    "tags": [
+      "typescript",
+      "study"
+    ],
+    "createdAt": "2025-12-03T03:55:45.052Z"
+  },
+  {
+    "id": 6,
+    "title": "Проект",
+    "content": "Добавить сохранение заметок в JSON",
+    "tags": [
+      "project",
+      "todo"
+    ],
+    "createdAt": "2025-12-03T03:55:45.052Z"
+  },
+  {
+    "id": 7,
+    "title": "Учеба",
+    "content": "Разобрать generics в TypeScript",
+    "tags": [
+      "typescript",
+      "study"
+    ],
+    "createdAt": "2025-12-03T04:28:35.944Z"
+  },
+  {
+    "id": 8,
+    "title": "Проект",
+    "content": "Добавить сохранение заметок в JSON",
+    "tags": [
+      "project",
+      "todo"
+    ],
+    "createdAt": "2025-12-03T04:28:35.944Z"
+  },
+  {
+    "id": 9,
+    "title": "Учеба",
+    "content": "Разобрать generics в TypeScript",
+    "tags": [
+      "typescript",
+      "study"
+    ],
+    "createdAt": "2025-12-03T04:45:18.467Z"
+  },
+  {
+    "id": 10,
+    "title": "Проект",
+    "content": "Добавить сохранение заметок в JSON",
+    "tags": [
+      "project",
+      "todo"
+    ],
+    "createdAt": "2025-12-03T04:45:18.467Z"
   }
 ]

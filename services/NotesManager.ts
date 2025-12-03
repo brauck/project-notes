@@ -59,4 +59,67 @@ export class NotesManager {
         : 1;
     }
   }
+
+    // 🔹 Сортировка по дате (новые сверху)
+  listNotesNewestFirst(): Note[] {
+    return [...this.notes].sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+  }
+
+  // 🔹 Сортировка по дате (старые сверху)
+  listNotesOldestFirst(): Note[] {
+    return [...this.notes].sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
+  }
+
+    updateNote(id: number, newTitle?: string, newContent?: string, newTags?: string[]): void {
+    const note = this.notes.find(n => n.id === id);
+    if (!note) {
+      console.log(`Заметка с id=${id} не найдена`);
+      return;
+    }
+
+    if (newTitle !== undefined) {
+      note.title = newTitle;
+    }
+    if (newContent !== undefined) {
+      note.content = newContent;
+    }
+    if (newTags !== undefined) {
+      note.tags = newTags;
+    }
+  }
+
+  // 🔹 Группировка заметок по тегам
+  groupByTags(): Map<string, Note[]> {
+    const map = new Map<string, Note[]>();
+
+    this.notes.forEach(note => {
+      note.tags.forEach(tag => {
+        if (!map.has(tag)) {
+          map.set(tag, []);
+        }
+        map.get(tag)!.push(note);
+      });
+    });
+
+    return map;
+  }
+
+    exportToMarkdown(filename: string): void {
+    let md = "# 📒 Notes Export\n\n";
+
+    this.notes.forEach(note => {
+      md += `## ${note.title}\n`;
+      md += `**ID:** ${note.id}\n\n`;
+      md += `**Дата:** ${note.createdAt.toLocaleString()}\n\n`;
+      md += `${note.content}\n\n`;
+
+      if (note.tags.length > 0) {
+        md += `**Теги:** ${note.tags.map(t => `\`${t}\``).join(", ")}\n\n`;
+      }
+
+      md += "---\n\n";
+    });
+
+    fs.writeFileSync(filename, md, "utf-8");
+  }
 }
