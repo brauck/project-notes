@@ -1,8 +1,12 @@
 import { NotesManager } from "./services/NotesManager";
+import * as dotenv from "dotenv";
+
+dotenv.config();
 
 const manager = new NotesManager();
 
-// Загружаем заметки из файла
+// Загружаем заметки из файла (JSON путь берём из .env)
+const jsonFile = process.env.NOTES_JSON || "notes.json";
 manager.loadFromFile("notes.json");
 
 manager.addNote("Учеба", "Разобрать generics в TypeScript", ["typescript", "study"]);
@@ -33,6 +37,11 @@ manager.saveToFile("notes.json");
 
 manager.addNote("Проект", "Добавить экспорт заметок в Markdown", ["project", "todo"]);
 
-manager.exportToMarkdown("notes.md");
-console.log("Заметки экспортированы в notes.md");
+// Экспортируем в Markdown и HTML
+const mdFile = process.env.NOTES_MD || "notes.md";
+const htmlFile = process.env.NOTES_HTML || "notes.html";
 
+manager.exportToMarkdown(mdFile);
+manager.exportToHtml(htmlFile);
+
+console.log(`Заметки сохранены в ${jsonFile}, экспортированы в ${mdFile} и ${htmlFile}`);
