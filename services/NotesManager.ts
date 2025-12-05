@@ -1,6 +1,7 @@
 import { Note } from "../models/Note";
 import * as fs from "fs";
 import PDFDocument from "pdfkit";
+import ExcelJS from "exceljs";
 
 export class NotesManager {
   private notes: Note[] = [];
@@ -230,10 +231,13 @@ exportToHtml(filename: string): void {
     fs.writeFileSync(filename, html, "utf-8");
   }
 
-    exportToPdf(filename: string): void {
+    exportToPdf(filename: string, fontPath: string): void {
     const doc = new PDFDocument({ margin: 40 });
     const stream = fs.createWriteStream(filename);
     doc.pipe(stream);
+
+    // Подключаем шрифт с поддержкой кириллицы
+    doc.font(fontPath);
 
     doc.fontSize(20).text("📒 Notes Export", { align: "center" });
     doc.moveDown();
@@ -255,5 +259,79 @@ exportToHtml(filename: string): void {
     });
 
     doc.end();
+  }
+
+    async exportToExcel(filename: string): Promise<void> {
+    const workbook = new ExcelJS.Workbook();
+    const sheet = workbook.addWorksheet("Notes");
+
+    // Заголовки таблицы
+    sheet.columns = [
+      { header: "ID", key: "id", width: 10 },
+      { header: "Заголовок", key: "title", width: 30 },
+      { header: "Содержимое", key: "content", width: 50 },
+      { header: "Дата создания", key: "createdAt", width: 25 },
+      { header: "Теги", key: "tags", width: 30 },
+    ];
+
+    // Добавляем строки
+    this.notes.forEach(note => {
+      sheet.addRow({
+        id: note.id,
+        title: note.title,
+        content: note.content,
+        createdAt: note.createdAt.toLocaleString(),
+        tags: note.tags.join(", "),
+      });
+    });
+
+    // Немного стилей для заголовков
+    sheet.getRow(1).font = { bold: true, color: { argb: "FF007ACC" } };
+
+    await workbook.xlsx.writeFile(filename);
+  }
+
+    exportToCsv(filename: string): void {
+    // Заголовки
+    let csv = "ID;Title;Content;CreatedAt;Tags\n";
+
+    // Строки
+    this.notes.forEach(note => {
+      const id = note.id;
+      const title = `"${note.title.replace(/"/g, '""')}"`; // экранируем кавычки
+      const content = `"${note.content.replace(/"/g, '""')}"`;
+      const createdAt = note.createdAt.toLocaleString();
+      const tags = `"${note.tags.join(", ").replace(/"/g, '""')}"`;
+
+      csv += `${id};${title};${content};${createdAt};${tags}\n`;
+    });
+
+    fs.writeFileSync(filename, csv, "utf-8");
+  }
+
+    importFromCsv(filename: string): void {
+    const data = fs.readFileSync(filename, "utf-8");
+    const lines = data.split("\n").filter(line => line.trim().length > 0);
+
+    // Первая строка — заголовки, пропускаем её
+    lines.slice(1).forEach(line => {
+      const [id, title, content, createdAt, tags] = line.split(";");
+
+      // Убираем кавычки и экранирование
+      const cleanTitle = title?.replace(/^"|"$/g, "").replace(/""/g, '"') || "";
+      const cleanContent = content?.replace(/^"|"$/g, "").replace(/""/g, '"') || "";
+      const cleanTags = tags?.replace(/^"|"$/g, "").split(",").map(t => t.trim()).filter(t => t.length > 0) || [];
+
+      const note: Note = {
+        id: Number(id),
+        title: cleanTitle,
+        content: cleanContent,
+        createdAt: new Date(createdAt),
+        tags: cleanTags,
+      };
+
+      this.notes.push(note);
+      this.nextId = Math.max(this.nextId, note.id + 1);
+    });
   }
 }

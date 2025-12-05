@@ -45,3 +45,25 @@ manager.exportToMarkdown(mdFile);
 manager.exportToHtml(htmlFile);
 
 console.log(`Заметки сохранены в ${jsonFile}, экспортированы в ${mdFile} и ${htmlFile}`);
+
+const pdfFile = process.env.NOTES_PDF || "notes.pdf";
+const fontFile = process.env.NOTES_FONT || "fonts/DejaVuSans.ttf";
+manager.exportToPdf(pdfFile, fontFile);
+
+console.log(`Заметки экспортированы в ${pdfFile}`);
+
+const excelFile = process.env.NOTES_XLSX || "notes.xlsx";
+manager.exportToExcel(excelFile).then(() => {
+  console.log(`Заметки экспортированы в ${excelFile}`);
+});
+
+const csvFile = process.env.NOTES_CSV || "notes.csv";
+manager.exportToCsv(csvFile);
+
+console.log(`Заметки экспортированы в ${csvFile}`);
+
+// Импортируем заметки из CSV
+manager.importFromCsv(csvFile);
+
+console.log("Заметки импортированы из CSV:");
+console.log(manager.listNotes());
